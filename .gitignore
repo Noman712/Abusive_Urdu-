@@ -1,0 +1,4 @@
+# IDE related stuff 
+.vscode/
+__pycache__/
+.idea/

@@ -17,6 +17,7 @@ from numpy.random import seed
 seed(1)
 import pandas as pd
 
+'''
 from keras.preprocessing import sequence
 from keras_self_attention import SeqSelfAttention, SeqWeightedAttention
 
@@ -34,6 +35,7 @@ from keras.callbacks import CSVLogger
 from keras.utils import to_categorical
 from keras.datasets import mnist
 from keras.utils.vis_utils import model_to_dot
+'''
 
 from IPython.display import SVG
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -138,9 +140,8 @@ class BasicModels(object):
         print('\n')
         print("--------------- Random Forest ---------------")
         return rfc
-    
-    
 
+    '''
     def CNN1D_Ngrams(self,_xTrain, _xTest, yTrain, yTest, _loss='mean_squared_error', _optimizer= 'Adam', _metrics=['accuracy'], _epochs = 25 , _validation_split = 0.2, _batch_size = 4, _verbose = 2 ):
         print("--------------- CNN1D ---------------")  
         
@@ -203,7 +204,7 @@ class BasicModels(object):
         print('\n')
         print("--------------- LSTM ---------------")
         return model
-
+    '''
 
 
    
