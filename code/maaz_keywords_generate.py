@@ -275,7 +275,8 @@ class Urdu_Dataset:
         print("Shape of labels:" + str(y_train.shape))
         print(X_count[2, :200])
 
-        xTrain, xTest, yTrain, yTest = train_test_split(X_count, y_train, test_size = 0.2)
+        #xTrain, xTest, yTrain, yTest = train_test_split(X_count, y_train, test_size = 0.2)
+        xTrain, xTest, yTrain, yTest = train_test_split(X_tfidf, y_train, test_size=0.2)
         return xTrain, xTest, yTrain, yTest, sentences_corpus, keywords_dictionary, y_train
     
 

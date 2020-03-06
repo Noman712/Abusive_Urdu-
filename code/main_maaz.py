@@ -93,57 +93,51 @@ basic_model.ROC_CURVE_ALL_MODEL_Ngram(xTest_data, yTest_data, 2, models,labels, 
 #%% char cell
 print('\n#unigram char')
 xTrain1, xTest1, yTrain1, yTest1, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(1,1), _max_features=3000, words= False)
-
-rf_ngram1 = basic_model.RF_Ngrams(xTrain1, xTest1, yTrain1, yTest1,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-svm_ngram1 = basic_model.SVM_Ngrams(xTrain1, xTest1, yTrain1, yTest1, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')  
-#cnn1d_ngram1  = basic_model.CNN1D_Ngrams(xTrain1, xTest1, yTrain1, yTest1,_epochs = 50, _verbose=2)
-#lstm_ngram1 = basic_model.bc_LSTM_Ngrams(xTrain1, xTest1, yTrain1, yTest1,_epochs = 50, _verbose=2)
+#rf_ngram1 = basic_model.RF_Ngrams(xTrain1, xTest1, yTrain1, yTest1,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
+#svm_ngram1 = basic_model.SVM_Ngrams(xTrain1, xTest1, yTrain1, yTest1, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')
+cnn1d_ngram1  = basic_model.CNN1D_Ngrams(xTrain1, xTest1, yTrain1, yTest1,_epochs = 50, _verbose=2)
+lstm_ngram1 = basic_model.bc_LSTM_Ngrams(xTrain1, xTest1, yTrain1, yTest1,_epochs = 50, _verbose=2)
 
 
 print('\n#bigram char')
 xTrain2, xTest2, yTrain2, yTest2, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(2,2), _max_features=3000, words= False)
-rf_ngram2 = basic_model.RF_Ngrams(xTrain2, xTest2, yTrain2, yTest2,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-svm_ngram2 = basic_model.SVM_Ngrams(xTrain2, xTest2, yTrain2, yTest2, _C = [1,5], _kernel= ['linear','rbf'], _tol = [0.01,0.02], _class_weight = 'balanced')  
-#cnn1d_ngram2  = basic_model.CNN1D_Ngrams(xTrain2, xTest2, yTrain2, yTest2,_epochs = 50, _verbose=2)
-#lstm_ngram2 = basic_model.bc_LSTM_Ngrams(xTrain2, xTest2, yTrain2, yTest2,_epochs = 50, _verbose=2)
+#rf_ngram2 = basic_model.RF_Ngrams(xTrain2, xTest2, yTrain2, yTest2,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
+#svm_ngram2 = basic_model.SVM_Ngrams(xTrain2, xTest2, yTrain2, yTest2, _C = [1,5], _kernel= ['linear','rbf'], _tol = [0.01,0.02], _class_weight = 'balanced')
+cnn1d_ngram2  = basic_model.CNN1D_Ngrams(xTrain2, xTest2, yTrain2, yTest2,_epochs = 50, _verbose=2)
+lstm_ngram2 = basic_model.bc_LSTM_Ngrams(xTrain2, xTest2, yTrain2, yTest2,_epochs = 50, _verbose=2)
 
 
 
 print('\n#trigram char')
 xTrain3, xTest3, yTrain3, yTest3, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(3,3), _max_features=3000, words= False)
-rf_ngram3 = basic_model.RF_Ngrams(xTrain3, xTest3, yTrain3, yTest3,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-svm_ngram3 = basic_model.SVM_Ngrams(xTrain3, xTest3, yTrain3, yTest3, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')  
-#cnn1d_ngram3  = basic_model.CNN1D_Ngrams(xTrain3, xTest3, yTrain3, yTest3,_epochs = 50, _verbose=2)
-#lstm_ngram3 = basic_model.bc_LSTM_Ngrams(xTrain3, xTest3, yTrain3, yTest3,_epochs = 50, _verbose=2)
-
-
-
+#rf_ngram3 = basic_model.RF_Ngrams(xTrain3, xTest3, yTrain3, yTest3,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
+#svm_ngram3 = basic_model.SVM_Ngrams(xTrain3, xTest3, yTrain3, yTest3, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')
+cnn1d_ngram3  = basic_model.CNN1D_Ngrams(xTrain3, xTest3, yTrain3, yTest3,_epochs = 50, _verbose=2)
+lstm_ngram3 = basic_model.bc_LSTM_Ngrams(xTrain3, xTest3, yTrain3, yTest3,_epochs = 50, _verbose=2)
 
 print('\n#uni+bigram char')
 xTrain12, xTest12, yTrain12, yTest12, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(1,2), _max_features=3000, words= False)
-rf_ngram12 = basic_model.RF_Ngrams(xTrain12, xTest12, yTrain12, yTest12,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-svm_ngram12 = basic_model.SVM_Ngrams(xTrain12, xTest12, yTrain12, yTest12, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')  
-#cnn1d_ngram12  = basic_model.CNN1D_Ngrams(xTrain12, xTest12, yTrain12, yTest12,_epochs = 50, _verbose=2)
-#lstm_ngram12 = basic_model.bc_LSTM_Ngrams(xTrain12, xTest12, yTrain12, yTest12,_epochs = 50, _verbose=2)
+#rf_ngram12 = basic_model.RF_Ngrams(xTrain12, xTest12, yTrain12, yTest12,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
+#svm_ngram12 = basic_model.SVM_Ngrams(xTrain12, xTest12, yTrain12, yTest12, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')
+cnn1d_ngram12  = basic_model.CNN1D_Ngrams(xTrain12, xTest12, yTrain12, yTest12,_epochs = 50, _verbose=2)
+lstm_ngram12 = basic_model.bc_LSTM_Ngrams(xTrain12, xTest12, yTrain12, yTest12,_epochs = 50, _verbose=2)
 
 
 ##_ngram_range=(1,3) geneates all the N-grams in te range from (1, 3). So it's uni + bi + tri
 print('\n#uni+bi+trigram char')
 xTrain13, xTest13, yTrain13, yTest13, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(1,3), _max_features=3000, words= False)
-rf_ngram13 = basic_model.RF_Ngrams(xTrain13, xTest13, yTrain13, yTest13,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-svm_ngram13 = basic_model.SVM_Ngrams(xTrain13, xTest13, yTrain13, yTest13, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')  
-#cnn1d_ngram13  = basic_model.CNN1D_Ngrams(xTrain13, xTest13, yTrain13, yTest13,_epochs = 50, _verbose=2)
-#lstm_ngram13 = basic_model.bc_LSTM_Ngrams(xTrain13, xTest13, yTrain13, yTest13,_epochs = 50, _verbose=2)
+#rf_ngram13 = basic_model.RF_Ngrams(xTrain13, xTest13, yTrain13, yTest13,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
+#svm_ngram13 = basic_model.SVM_Ngrams(xTrain13, xTest13, yTrain13, yTest13, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')
+cnn1d_ngram13  = basic_model.CNN1D_Ngrams(xTrain13, xTest13, yTrain13, yTest13,_epochs = 50, _verbose=2)
+lstm_ngram13 = basic_model.bc_LSTM_Ngrams(xTrain13, xTest13, yTrain13, yTest13,_epochs = 50, _verbose=2)
 
 
-
-
-
+'''
 print('\n#unigram word')
 wxTrain1, wxTest1, wyTrain1, wyTest1, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(1,1), _max_features=3000, words= True)
 
 wrf_ngram1 = basic_model.RF_Ngrams(wxTrain1, wxTest1, wyTrain1, wyTest1,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-wsvm_ngram1 = basic_model.SVM_Ngrams(wxTrain1, wxTest1, wyTrain1, wyTest1, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')  
+#wsvm_ngram1 = basic_model.SVM_Ngrams(wxTrain1, wxTest1, wyTrain1, wyTest1, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')
 #wcnn1d_ngram1  = basic_model.CNN1D_Ngrams(wxTrain1, wxTest1, wyTrain1, wyTest1,_epochs = 50, _verbose=2)
 #wlstm_ngram1 = basic_model.bc_LSTM_Ngrams(wxTrain1, wxTest1, wyTrain1, wyTest1,_epochs = 50, _verbose=2)
 
@@ -153,7 +147,7 @@ print('\n#bigram word')
 wxTrain2, wxTest2, wyTrain2, wyTest2, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(2,2), _max_features=3000, words= True)
 
 wrf_ngram2 = basic_model.RF_Ngrams(wxTrain2, wxTest2, wyTrain2, wyTest2,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-wsvm_ngram2 = basic_model.SVM_Ngrams(wxTrain2, wxTest2, wyTrain2, wyTest2, _C = [1,5], _kernel= ['linear','rbf'], _tol = [0.01,0.02], _class_weight = 'balanced')  
+wsvm_ngram2 = basic_model.SVM_Ngrams(wxTrain2, wxTest2, wyTrain2, wyTest2, _C = [1,5], _kernel= ['linear','rbf'], _tol = [0.01,0.02], _class_weight = 'balanced')
 #wcnn1d_ngram2  = basic_model.CNN1D_Ngrams(wxTrain2, wxTest2, wyTrain2, wyTest2,_epochs = 50, _verbose=2)
 #wlstm_ngram2 = basic_model.bc_LSTM_Ngrams(wxTrain2, wxTest2, wyTrain2, wyTest2,_epochs = 50, _verbose=2)
 
@@ -164,7 +158,7 @@ print('\n#trigram word')
 wxTrain3, wxTest3, wyTrain3, wyTest3, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(3,3), _max_features=3000, words= True)
 
 wrf_ngram3 = basic_model.RF_Ngrams(wxTrain3, wxTest3, wyTrain3, wyTest3, _n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-wsvm_ngram3 = basic_model.SVM_Ngrams(wxTrain3, wxTest3, wyTrain3, wyTest3, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')  
+#wsvm_ngram3 = basic_model.SVM_Ngrams(wxTrain3, wxTest3, wyTrain3, wyTest3, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')
 #wcnn1d_ngram3  = basic_model.CNN1D_Ngrams(wxTrain3, wxTest3, wyTrain3, wyTest3, _epochs = 50, _verbose=2)
 #wlstm_ngram3 = basic_model.bc_LSTM_Ngrams(wxTrain3, wxTest3, wyTrain3, wyTest3, _epochs = 50, _verbose=2)
 
@@ -175,7 +169,7 @@ print('\n#uni+bigram word')
 wxTrain12, wxTest12, wyTrain12, wyTest12, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(1,2), _max_features=3000, words= True)
 
 wrf_ngram12 = basic_model.RF_Ngrams(wxTrain12, wxTest12, wyTrain12, wyTest12, _n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-wsvm_ngram12 = basic_model.SVM_Ngrams(wxTrain12, wxTest12, wyTrain12, wyTest12, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')  
+#wsvm_ngram12 = basic_model.SVM_Ngrams(wxTrain12, wxTest12, wyTrain12, wyTest12, _C = [1], _kernel= ['linear'], _tol = [0.01], _class_weight = 'balanced')
 #wcnn1d_ngram12  = basic_model.CNN1D_Ngrams(wxTrain12, wxTest12, wyTrain12, wyTest12, _epochs = 50, _verbose=2)
 #wlstm_ngram12 = basic_model.bc_LSTM_Ngrams(wxTrain12, wxTest12, wyTrain12, wyTest12, _epochs = 50, _verbose=2)
 
@@ -185,10 +179,10 @@ print('\n#uni+bi+trigram word')
 wxTrain13, wxTest13, wyTrain13, wyTest13, sentences_corpus, keywords_dictionary, labels = dsurdu.Generate_Urdu_Ngrams(_ngram_range=(1,3), _max_features=3000, words= True)
 
 wrf_ngram13 = basic_model.RF_Ngrams(wxTrain13, wxTest13, wyTrain13, wyTest13,_n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=2)
-wsvm_ngram13 = basic_model.SVM_Ngrams(wxTrain13, wxTest13, wyTrain13, wyTest13, _C = [1], _kernel= ['linear','rbf'], _tol = [0.01], _class_weight = 'balanced')  
+#wsvm_ngram13 = basic_model.SVM_Ngrams(wxTrain13, wxTest13, wyTrain13, wyTest13, _C = [1], _kernel= ['linear','rbf'], _tol = [0.01], _class_weight = 'balanced')
 #wcnn1d_ngram13  = basic_model.CNN1D_Ngrams(wxTrain13, wxTest13, wyTrain13, wyTest13, _epochs = 50, _verbose=2)
 #wlstm_ngram13 = basic_model.bc_LSTM_Ngrams(wxTrain13, wxTest13, wyTrain13, wyTest13, _epochs = 50, _verbose=2)
-
+'''
 
 
 """
