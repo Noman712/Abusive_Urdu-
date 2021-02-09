@@ -17,8 +17,9 @@ from numpy.random import seed
 seed(1)
 import pandas as pd
 
+
 from keras.preprocessing import sequence
-from keras_self_attention import SeqSelfAttention, SeqWeightedAttention
+#from keras_self_attention import SeqSelfAttention, SeqWeightedAttention
 
 from keras import backend
 from keras import backend as K
@@ -34,6 +35,7 @@ from keras.callbacks import CSVLogger
 from keras.utils import to_categorical
 from keras.datasets import mnist
 from keras.utils.vis_utils import model_to_dot
+
 
 from IPython.display import SVG
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -88,31 +90,37 @@ class BasicModels(object):
         
         _input_shape = (dim2,dim3)
         print(_input_shape)
-       
-        
+
         return xTrain,xTest,_input_shape
-    
-    
+
+    @staticmethod
+    def print_report(yTest, y_pred, y_pred_proba=None, classif=''):
+        print("=== Classification Report {} ===".format(classif))
+        print(classification_report(yTest, y_pred))
+        print('\n')
+        print("=== Confusion Matrix {} ===".format(classif))
+        print(confusion_matrix(yTest, y_pred))
+        print('\n')
+        print("=== Accuracy {} ===".format(classif))
+        print(accuracy_score(yTest, y_pred))
+        if y_pred_proba is not None:
+            print("=== ROC-AUC {} ===".format(classif))
+            print(roc_auc_score(yTest, y_pred_proba))
+        print('\n')
+
     def SVM_Ngrams(self,xTrain, xTest, yTrain, yTest, _C = [1], _kernel= ['linear', 'rbf'], _tol = [0.01, 0.02], _class_weight = 'balanced'):
         print("--------------- Support Vector Machine ---------------")
         print("Fitting the classifier to the training set")
-        param_grid = {'C': _C, 'kernel': _kernel, 'tol': _tol}
-        clf = GridSearchCV(svm.SVC(probability=True,class_weight='balanced'), param_grid)
+        #param_grid = {'C': _C, 'kernel': _kernel, 'tol': _tol}
+        #clf = GridSearchCV(svm.SVC(probability=True,class_weight='balanced'), param_grid)
+        clf = svm.SVC(probability=True,class_weight='balanced', kernel='linear', tol=0.01)
         clf.fit(xTrain, yTrain)
-        print("Best estimator found by grid search:")
-        print(clf.best_estimator_)
+        #print("Best estimator found by grid search:")
+        #print(clf.best_estimator_)
+        print("Predicting with SVM:")
         y_pred = clf.predict(xTest)
-        print("=== AUC Score ===")
-        accuracy = accuracy_score(yTest, y_pred)
-        print('Accuracy: %f' % accuracy)
-        
-        
-        print("=== Classification Report SVM ===")
-        print(classification_report(yTest, y_pred))
-        print('\n')
-        print("=== Confusion Matrix SVM ===")
-        print(confusion_matrix(yTest, y_pred))
-        print('\n')
+        y_pred_proba = clf.predict_proba(xTest)
+        self.print_report(yTest, y_pred, y_pred_proba[:,1], classif='SVM')
         print("--------------- Support Vector Machine ---------------")
         return clf
 
@@ -120,32 +128,16 @@ class BasicModels(object):
         
     def RF_Ngrams(self,xTrain, xTest, yTrain, yTest, _n_estimators = 100, _n_jobs=3, _criterion = 'gini', _max_depth  = 15, _verbose=10):
         print("--------------- Random Forest ---------------")
-       
-        
-        rfc = RandomForestClassifier(n_estimators = _n_estimators, max_features=None,  n_jobs=_n_jobs, criterion = _criterion, max_depth  = _max_depth, verbose=_verbose)
-
-        
+        rfc = RandomForestClassifier(n_estimators = _n_estimators, max_features=None,  n_jobs=_n_jobs, criterion = _criterion, max_depth  = _max_depth)#, verbose=_verbose)
         rfc = rfc.fit(xTrain, yTrain)
-        
         print("Predicting labels for test data..")
-        rfc_predict  = rfc.predict(xTest)
-        
-        print("=== Classification Report Random Forest ===")
-        print(classification_report(yTest, rfc_predict))
-        print('\n')
-        print("=== Confusion Matrix Random Forest ===")
-        print(confusion_matrix(yTest, rfc_predict))
-        print('\n')
+        self.print_report(yTest, rfc.predict(xTest), rfc.predict_proba(xTest)[:,1], classif='RF')
         print("--------------- Random Forest ---------------")
         return rfc
-    
-    
+
 
     def CNN1D_Ngrams(self,_xTrain, _xTest, yTrain, yTest, _loss='mean_squared_error', _optimizer= 'Adam', _metrics=['accuracy'], _epochs = 25 , _validation_split = 0.2, _batch_size = 4, _verbose = 2 ):
-        print("--------------- CNN1D ---------------")  
-        
-        
-        
+        print("--------------- CNN1D ---------------")
         xTrain,xTest,_input_shape = BasicModels.Shape_Reshaper(_xTrain, _xTest)
         
         model = Sequential()
@@ -162,25 +154,18 @@ class BasicModels(object):
         model.fit(xTrain, yTrain, epochs=_epochs,  validation_split=_validation_split)
        
         accuracy = model.evaluate(xTest, yTest,  verbose=_verbose)
-        print(accuracy)
+        print("Acc from Keras: {}".format(accuracy))
         y_pred = model.predict_classes(xTest)
 
-        print("=== Classification Report Conv 1D ===")
-        print(classification_report(yTest, y_pred))
-        print('\n')
-
-        print("=== Confusion Matrix Conv 1D ===")
-        print(confusion_matrix(yTest, y_pred))
-        print('\n')
-                
-        print("--------------- CNN1D ---------------") 
+        self.print_report(yTest, y_pred, model.predict_proba(xTest), classif='Conv 1D')
+        print("--------------- CNN1D ---------------")
         return model
     
  
     def bc_LSTM_Ngrams(self,_xTrain, _xTest, yTrain, yTest, _loss='mean_squared_error', _optimizer= 'SGD', _metrics=['accuracy'], _epochs = 25 , _validation_split = 0.2, _batch_size = 2, _verbose = 0 ):
         print("--------------- LSTM ---------------")       
         
-        xTrain,xTest,_input_shape = BasicModels.Shape_Reshaper(_xTrain, _xTest)
+        xTrain, xTest, _input_shape = BasicModels.Shape_Reshaper(_xTrain, _xTest)
         
         model = Sequential()
         model.add(LSTM(4, input_shape=_input_shape, activation='tanh' , return_sequences=True))
@@ -192,18 +177,9 @@ class BasicModels(object):
         history = model.fit(xTrain, yTrain, epochs=_epochs,  validation_split = _validation_split)
         
         accuracy = model.evaluate(xTest, yTest,  verbose= _verbose)
+        print("Accuracy from Keras: {}".format(accuracy))
         y_pred = model.predict_classes(xTest, batch_size = _batch_size, verbose = _verbose)
-        
-        
-        print("=== Classification Report LSTM ===")
-        print(classification_report(yTest, y_pred))
-        print('\n')
-        print("=== Confusion Matrix LSTM ===")
-        print(confusion_matrix(yTest, y_pred))
-        print('\n')
+
+        self.print_report(yTest, y_pred, model.predict_proba(xTest), classif='LSTM')
         print("--------------- LSTM ---------------")
         return model
-
-
-
-   
